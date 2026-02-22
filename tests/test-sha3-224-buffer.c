@@ -78,6 +78,7 @@ check (char const *message, size_t len, char const *expect)
       sha3_process_bytes (message + part, SHA3_224_BLOCK_SIZE - part, &ctx);
       char buf2[SHA3_224_DIGEST_SIZE];
       sha3_finish_ctx (&ctx, buf2);
+      sha3_free_ctx (&ctx);
       if (mismatch (sha3_224_buffer (message, SHA3_224_BLOCK_SIZE, buf), buf2))
         {
           failed = 1;
@@ -119,11 +120,9 @@ main (void)
      crashing.  */
   {
     struct sha3_ctx ctx;
-    if (sha3_224_init_ctx (&ctx))
-      {
-        sha3_free_ctx (&ctx);
-        sha3_free_ctx (&ctx);
-      }
+    sha3_224_init_ctx (&ctx);
+    sha3_free_ctx (&ctx);
+    sha3_free_ctx (&ctx);
   }
 
   return 0;

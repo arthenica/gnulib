@@ -337,21 +337,15 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
   bool                                                                  \
   sha3_##SIZE##_init_ctx (struct sha3_ctx *ctx)                         \
   {                                                                     \
-    int result;                                                         \
-    ctx->evp_ctx = EVP_MD_CTX_new ();                                   \
-    if (ctx->evp_ctx == NULL)                                           \
+    EVP_MD_CTX *evp_ctx = EVP_MD_CTX_new ();                            \
+    if (evp_ctx && ! EVP_DigestInit_ex (evp_ctx, EVP_sha3_##SIZE (), NULL)) \
       {                                                                 \
-        errno = ENOMEM;                                                 \
-        return false;                                                   \
+        EVP_MD_CTX_free (evp_ctx);                                      \
+        evp_ctx = NULL;                                                 \
       }                                                                 \
-    result = EVP_DigestInit_ex (ctx->evp_ctx, EVP_sha3_##SIZE (),       \
-                                NULL);                                  \
-    if (result == 0)                                                    \
-      {                                                                 \
-        errno = ENOMEM;                                                 \
-        return false;                                                   \
-      }                                                                 \
-    return true;                                                        \
+    ctx->evp_ctx = evp_ctx;                                             \
+    errno = ENOMEM;  /* OK to set errno even if successful.  */         \
+    return !!evp_ctx;                                                   \
   }
 
 DEFINE_SHA3_INIT_CTX (224)
