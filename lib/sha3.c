@@ -393,11 +393,12 @@ sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
   sha3_##SIZE##_buffer (const char *buffer, size_t len, void *resblock) \
   {                                                                     \
     struct sha3_ctx ctx;                                                \
-    if (! sha3_##SIZE##_init_ctx (&ctx))                                \
-      return NULL;                                                      \
-    if (! sha3_process_bytes (buffer, len, &ctx))                       \
-      return NULL;                                                      \
-    return sha3_finish_ctx (&ctx, resblock);                            \
+    void *result = ((sha3_##SIZE##_init_ctx (&ctx)                      \
+                     && sha3_process_bytes (buffer, len, &ctx))         \
+                    ? sha3_finish_ctx (&ctx, resblock)                  \
+                    : NULL);                                            \
+    sha3_free_ctx (&ctx);                                               \
+    return result;                                                      \
   }
 
 DEFINE_SHA3_BUFFER (224)
