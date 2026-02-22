@@ -750,8 +750,8 @@ static const uint32_t rcon[] = {
  * @return      the number of rounds for the given cipher key size.
  */
 int
-rijndaelKeySetupEnc (uint32_t rk[ /*4*(Nr + 1) */ ],
-                     const char cipherKey[], size_t keyBits)
+rijndaelKeySetupEnc (uint32_t rk[restrict /*4*(Nr + 1) */],
+                     char const cipherKey[restrict], size_t keyBits)
 {
   size_t i = 0;
 
@@ -848,8 +848,8 @@ rijndaelKeySetupEnc (uint32_t rk[ /*4*(Nr + 1) */ ],
  * @return      the number of rounds for the given cipher key size.
  */
 int
-rijndaelKeySetupDec (uint32_t rk[ /*4*(Nr + 1) */ ],
-                     const char cipherKey[], size_t keyBits)
+rijndaelKeySetupDec (uint32_t rk[restrict /*4*(Nr + 1) */],
+                     char const cipherKey[restrict], size_t keyBits)
 {
   /* expand the cipher key: */
   size_t Nr = rijndaelKeySetupEnc (rk, cipherKey, keyBits);
@@ -910,8 +910,8 @@ rijndaelKeySetupDec (uint32_t rk[ /*4*(Nr + 1) */ ],
 }
 
 void
-rijndaelEncrypt (const uint32_t rk[ /*4*(Nr + 1) */ ], size_t Nr,
-                 const char pt[16], char ct[16])
+rijndaelEncrypt (uint32_t const rk[restrict /*4*(Nr + 1) */], size_t Nr,
+                 char const pt[restrict 16], char ct[restrict 16])
 {
   uint32_t t0, t1, t2, t3;
 
@@ -1002,8 +1002,8 @@ rijndaelEncrypt (const uint32_t rk[ /*4*(Nr + 1) */ ], size_t Nr,
 }
 
 void
-rijndaelDecrypt (const uint32_t rk[ /*4*(Nr + 1) */ ], size_t Nr,
-                 const char ct[16], char pt[16])
+rijndaelDecrypt (uint32_t const rk[restrict /*4*(Nr + 1) */], size_t Nr,
+                 char const ct[restrict 16], char pt[restrict 16])
 {
   uint32_t t0, t1, t2, t3;
 

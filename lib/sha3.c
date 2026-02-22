@@ -81,7 +81,7 @@ set_uint64 (char *cp, u64 v)
 }
 
 void *
-sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
+sha3_read_ctx (struct sha3_ctx const *restrict ctx, void *restrict resbuf)
 {
   char *r = resbuf;
   size_t words = ctx->digestlen / sizeof *ctx->state;
@@ -113,7 +113,7 @@ sha3_conclude_ctx (struct sha3_ctx *ctx)
 }
 
 void *
-sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
+sha3_finish_ctx (struct sha3_ctx *restrict ctx, void *restrict resbuf)
 {
   sha3_conclude_ctx (ctx);
   return sha3_read_ctx (ctx, resbuf);
@@ -121,7 +121,8 @@ sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
 
 #define DEFINE_SHA3_BUFFER(SIZE)                                        \
   void *                                                                \
-  sha3_##SIZE##_buffer (const char *buffer, size_t len, void *resblock) \
+  sha3_##SIZE##_buffer (char const *restrict buffer, size_t len,        \
+                        void *restrict resblock)                        \
   {                                                                     \
     struct sha3_ctx ctx;                                                \
     sha3_##SIZE##_init_ctx (&ctx);                                      \
@@ -135,7 +136,8 @@ DEFINE_SHA3_BUFFER (384)
 DEFINE_SHA3_BUFFER (512)
 
 bool
-sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
+sha3_process_bytes (void const *restrict buffer, size_t len,
+                    struct sha3_ctx *restrict ctx)
 {
   char const *buf = buffer;
 
@@ -168,7 +170,8 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
 }
 
 bool
-sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
+sha3_process_block (void const *restrict buffer, size_t len,
+                    struct sha3_ctx *restrict ctx)
 {
   u64 *a = ctx->state;
   const u64 *words = buffer;
@@ -366,7 +369,7 @@ sha3_free_ctx (struct sha3_ctx *ctx)
 }
 
 void *
-sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
+sha3_read_ctx (struct sha3_ctx const *restrict ctx, void *restrict resbuf)
 {
   void *result = NULL;
   int err = ENOMEM;
@@ -386,7 +389,7 @@ sha3_read_ctx (const struct sha3_ctx *ctx, void *resbuf)
 }
 
 void *
-sha3_finish_ctx (struct sha3_ctx *ctx, void *resbuf)
+sha3_finish_ctx (struct sha3_ctx *restrict ctx, void *restrict resbuf)
 {
   int result = EVP_DigestFinal_ex (ctx->evp_ctx, resbuf, NULL);
   if (result == 0)
@@ -416,7 +419,8 @@ DEFINE_SHA3_BUFFER (384)
 DEFINE_SHA3_BUFFER (512)
 
 bool
-sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
+sha3_process_bytes (void const *restrict buffer, size_t len,
+                    struct sha3_ctx *restrict ctx)
 {
   int result = EVP_DigestUpdate (ctx->evp_ctx, buffer, len);
   if (result == 0)
@@ -428,7 +432,8 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
 }
 
 bool
-sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
+sha3_process_block (void const *restrict buffer, size_t len,
+                    struct sha3_ctx *restrict ctx)
 {
   return sha3_process_bytes (buffer, len, ctx);
 }

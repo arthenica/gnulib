@@ -31,32 +31,32 @@ extern "C" {
    KEYLEN bytes, writing the output to pre-allocated 16 byte minimum
    RESBUF buffer.  Return 0 on success.  */
 int
-hmac_md5 (const void *key, size_t keylen,
-          const void *buffer, size_t buflen, void *restrict resbuf);
+hmac_md5 (void const *restrict key, size_t keylen,
+          void const *restrict buffer, size_t buflen, void *restrict resbuf);
 
 /* Compute Hashed Message Authentication Code with SHA-1, over BUFFER
    data of BUFLEN bytes using the KEY of KEYLEN bytes, writing the
    output to pre-allocated 20 byte minimum RESBUF buffer.  Return 0 on
    success.  */
 int
-hmac_sha1 (const void *key, size_t keylen,
-           const void *in, size_t inlen, void *restrict resbuf);
+hmac_sha1 (void const *restrict key, size_t keylen,
+           void const *restrict in, size_t inlen, void *restrict resbuf);
 
 /* Compute Hashed Message Authentication Code with SHA-256, over BUFFER
    data of BUFLEN bytes using the KEY of KEYLEN bytes, writing the
    output to pre-allocated 32 byte minimum RESBUF buffer.  Return 0 on
    success.  */
 int
-hmac_sha256 (const void *key, size_t keylen,
-             const void *in, size_t inlen, void *restrict resbuf);
+hmac_sha256 (void const *restrict key, size_t keylen,
+             void const *restrict in, size_t inlen, void *restrict resbuf);
 
 /* Compute Hashed Message Authentication Code with SHA-512, over BUFFER
    data of BUFLEN bytes using the KEY of KEYLEN bytes, writing the
    output to pre-allocated 64 byte minimum RESBUF buffer.  Return 0 on
    success.  */
 int
-hmac_sha512 (const void *key, size_t keylen,
-             const void *in, size_t inlen, void *restrict resbuf);
+hmac_sha512 (void const *restrict key, size_t keylen,
+             void const *restrict in, size_t inlen, void *restrict resbuf);
 
 
 #ifdef __cplusplus

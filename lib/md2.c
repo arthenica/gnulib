@@ -46,7 +46,7 @@ md2_init_ctx (struct md2_ctx *ctx)
 /* Put result from CTX in first 16 bytes following RESBUF.  The result
    must be in little endian byte order.  */
 void *
-md2_read_ctx (const struct md2_ctx *ctx, void *resbuf)
+md2_read_ctx (struct md2_ctx const *restrict ctx, void *restrict resbuf)
 {
   memcpy (resbuf, ctx->X, 16);
 
@@ -56,7 +56,7 @@ md2_read_ctx (const struct md2_ctx *ctx, void *resbuf)
 /* Process the remaining bytes in the internal buffer and the usual
    prolog according to the standard and write the result to RESBUF.  */
 void *
-md2_finish_ctx (struct md2_ctx *ctx, void *resbuf)
+md2_finish_ctx (struct md2_ctx *restrict ctx, void *restrict resbuf)
 {
   /* pad the message */
   unsigned long k = 16 - ctx->curlen;
@@ -81,7 +81,7 @@ md2_finish_ctx (struct md2_ctx *ctx, void *resbuf)
    output yields to the wanted ASCII representation of the message
    digest.  */
 void *
-md2_buffer (const char *buffer, size_t len, void *resblock)
+md2_buffer (char const *restrict buffer, size_t len, void *restrict resblock)
 {
   struct md2_ctx ctx;
 
@@ -96,7 +96,8 @@ md2_buffer (const char *buffer, size_t len, void *resblock)
 }
 
 void
-md2_process_bytes (const void *buffer, size_t len, struct md2_ctx *ctx)
+md2_process_bytes (void const *restrict buffer, size_t len,
+                   struct md2_ctx *restrict ctx)
 {
   const char *in = buffer;
 
@@ -177,7 +178,8 @@ md2_compress (struct md2_ctx *ctx)
 
 /* Process LEN bytes of BUFFER, accumulating context into CTX.  */
 void
-md2_process_block (const void *buffer, size_t len, struct md2_ctx *ctx)
+md2_process_block (void const *restrict buffer, size_t len,
+                   struct md2_ctx *restrict ctx)
 {
   md2_process_bytes (buffer, len, ctx);
 }

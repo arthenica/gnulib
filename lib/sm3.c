@@ -91,7 +91,7 @@ set_uint32 (char *cp, uint32_t v)
 /* Put result from CTX in first 32 bytes following RESBUF.  The result
    must be in little endian byte order.  */
 void *
-sm3_read_ctx (const struct sm3_ctx *ctx, void *resbuf)
+sm3_read_ctx (struct sm3_ctx const *restrict ctx, void *restrict resbuf)
 {
   char *r = resbuf;
 
@@ -130,7 +130,7 @@ sm3_conclude_ctx (struct sm3_ctx *ctx)
 }
 
 void *
-sm3_finish_ctx (struct sm3_ctx *ctx, void *resbuf)
+sm3_finish_ctx (struct sm3_ctx *restrict ctx, void *restrict resbuf)
 {
   sm3_conclude_ctx (ctx);
   return sm3_read_ctx (ctx, resbuf);
@@ -141,7 +141,7 @@ sm3_finish_ctx (struct sm3_ctx *ctx, void *resbuf)
    output yields to the wanted ASCII representation of the message
    digest.  */
 void *
-sm3_buffer (const char *buffer, size_t len, void *resblock)
+sm3_buffer (char const *restrict buffer, size_t len, void *restrict resblock)
 {
   struct sm3_ctx ctx;
 
@@ -156,7 +156,8 @@ sm3_buffer (const char *buffer, size_t len, void *resblock)
 }
 
 void
-sm3_process_bytes (const void *buffer, size_t len, struct sm3_ctx *ctx)
+sm3_process_bytes (void const *restrict buffer, size_t len,
+                   struct sm3_ctx *restrict ctx)
 {
   /* When we already have some bits in our internal buffer concatenate
      both inputs first.  */
@@ -258,7 +259,8 @@ static const uint32_t sm3_round_constants[64] = {
    Most of this code comes from David Madore's sha256.c.  */
 
 void
-sm3_process_block (const void *buffer, size_t len, struct sm3_ctx *ctx)
+sm3_process_block (void const *restrict buffer, size_t len,
+                   struct sm3_ctx *restrict ctx)
 {
   const uint32_t *words = buffer;
   size_t nwords = len / sizeof (uint32_t);

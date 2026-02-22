@@ -61,8 +61,9 @@ alg_socket (char const *alg)
 }
 
 int
-afalg_buffer (const char *buffer, size_t len, const char *alg,
-              void *resblock, ssize_t hashlen)
+afalg_buffer (char const *restrict buffer, size_t len,
+              char const *restrict alg,
+              void *restrict resblock, ssize_t hashlen)
 {
   /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
      See <https://patchwork.kernel.org/patch/9308641/>.
@@ -99,8 +100,8 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
 }
 
 int
-afalg_stream (FILE *stream, const char *alg,
-              void *resblock, ssize_t hashlen)
+afalg_stream (FILE *restrict stream, char const *restrict alg,
+              void *restrict resblock, ssize_t hashlen)
 {
   int ofd = alg_socket (alg);
   if (ofd < 0)

@@ -76,28 +76,29 @@ extern void sha3_free_ctx (struct sha3_ctx *ctx);
    starting at BUFFER.
    It is necessary that LEN is a multiple of the BLOCKLEN member of CTX!!!
    Return false if an OpenSSL function fails.  */
-extern bool sha3_process_block (const void *buffer, size_t len,
-                                struct sha3_ctx *ctx);
+extern bool sha3_process_block (void const *restrict buffer, size_t len,
+                                struct sha3_ctx *restrict ctx);
 
 /* Starting with the result of former calls of this function (or the
    initialization function update the context for the next LEN bytes
    starting at BUFFER.
    It is NOT required that LEN is a multiple of the BLOCKLEN member of CTX.
    Return false if an OpenSSL function fails.  */
-extern bool sha3_process_bytes (const void *buffer, size_t len,
-                                struct sha3_ctx *ctx);
+extern bool sha3_process_bytes (void const *restrict buffer, size_t len,
+                                struct sha3_ctx *restrict ctx);
 
 /* Process the remaining bytes in the buffer and put result from CTX in RESBUF.
    The result is always in little endian byte order, so that a byte-wise output
    yields to the wanted ASCII representation of the message digest.
    Return NULL if an OpenSSL function fails.  */
-extern void *sha3_finish_ctx (struct sha3_ctx *ctx, void *restrict resbuf);
+extern void *sha3_finish_ctx (struct sha3_ctx *restrict ctx,
+                              void *restrict resbuf);
 
 /* Put result from CTX in RESBUF.  The result is always in little endian byte
    order, so that a byte-wise output yields to the wanted ASCII representation
    of the message digest.
    Return NULL if an OpenSSL function fails.  */
-extern void *sha3_read_ctx (const struct sha3_ctx *ctx,
+extern void *sha3_read_ctx (struct sha3_ctx const *restrict ctx,
                             void *restrict resbuf);
 
 /* Compute a SHA-3 message digest for LEN bytes beginning at BUFFER.
@@ -105,13 +106,13 @@ extern void *sha3_read_ctx (const struct sha3_ctx *ctx,
    output yields to the wanted ASCII representation of the message
    digest.
    Return NULL if an OpenSSL function fails.  */
-extern void *sha3_224_buffer (const char *buffer, size_t len,
+extern void *sha3_224_buffer (char const *restrict buffer, size_t len,
                               void *restrict resblock);
-extern void *sha3_256_buffer (const char *buffer, size_t len,
+extern void *sha3_256_buffer (char const *restrict buffer, size_t len,
                               void *restrict resblock);
-extern void *sha3_384_buffer (const char *buffer, size_t len,
+extern void *sha3_384_buffer (char const *restrict buffer, size_t len,
                               void *restrict resblock);
-extern void *sha3_512_buffer (const char *buffer, size_t len,
+extern void *sha3_512_buffer (char const *restrict buffer, size_t len,
                               void *restrict resblock);
 
 /* Compute SHA-3 message digest for bytes read from STREAM.  STREAM is an open
@@ -119,10 +120,10 @@ extern void *sha3_512_buffer (const char *buffer, size_t len,
    STREAM from its current position to its end will be read.  The case that the
    last operation on STREAM was an 'ungetc' is not supported.  The resulting
    message digest number will be written into RESBLOCK.  */
-extern int sha3_224_stream (FILE *stream, void *resblock);
-extern int sha3_256_stream (FILE *stream, void *resblock);
-extern int sha3_384_stream (FILE *stream, void *resblock);
-extern int sha3_512_stream (FILE *stream, void *resblock);
+extern int sha3_224_stream (FILE *restrict stream, void *restrict resblock);
+extern int sha3_256_stream (FILE *restrict stream, void *restrict resblock);
+extern int sha3_384_stream (FILE *restrict stream, void *restrict resblock);
+extern int sha3_512_stream (FILE *restrict stream, void *restrict resblock);
 
 # ifdef __cplusplus
 }

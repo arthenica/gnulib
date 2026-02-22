@@ -520,7 +520,7 @@ des_key_schedule (const char * _rawkey, uint32_t * subkey)
 }
 
 void
-gl_des_setkey (gl_des_ctx *ctx, const char * key)
+gl_des_setkey (gl_des_ctx *restrict ctx, char const *restrict key)
 {
   des_key_schedule (key, ctx->encrypt_subkeys);
 
@@ -532,7 +532,7 @@ gl_des_setkey (gl_des_ctx *ctx, const char * key)
 }
 
 bool
-gl_des_makekey (gl_des_ctx *ctx, const char * key, size_t keylen)
+gl_des_makekey (gl_des_ctx *ctx, char const *restrict key, size_t keylen)
 {
   if (keylen != 8)
     return false;
@@ -543,7 +543,8 @@ gl_des_makekey (gl_des_ctx *ctx, const char * key, size_t keylen)
 }
 
 void
-gl_des_ecb_crypt (gl_des_ctx *ctx, const char * _from, char * _to, int mode)
+gl_des_ecb_crypt (gl_des_ctx *ctx, char const *restrict _from,
+                  char *restrict _to, int mode)
 {
   const unsigned char *from = (const unsigned char *) _from;
   unsigned char *to = (unsigned char *) _to;
@@ -567,7 +568,9 @@ gl_des_ecb_crypt (gl_des_ctx *ctx, const char * _from, char * _to, int mode)
 }
 
 void
-gl_3des_set2keys (gl_3des_ctx *ctx, const char * key1, const char * key2)
+gl_3des_set2keys (gl_3des_ctx *restrict ctx,
+                  char const *restrict key1,
+                  char const *restrict key2)
 {
   des_key_schedule (key1, ctx->encrypt_subkeys);
   des_key_schedule (key2, &(ctx->decrypt_subkeys[32]));
@@ -589,8 +592,10 @@ gl_3des_set2keys (gl_3des_ctx *ctx, const char * key1, const char * key2)
 }
 
 void
-gl_3des_set3keys (gl_3des_ctx *ctx, const char * key1,
-                    const char * key2, const char * key3)
+gl_3des_set3keys (gl_3des_ctx *restrict ctx,
+                  char const *restrict key1,
+                  char const *restrict key2,
+                  char const *restrict key3)
 {
   des_key_schedule (key1, ctx->encrypt_subkeys);
   des_key_schedule (key2, &(ctx->decrypt_subkeys[32]));
@@ -610,9 +615,9 @@ gl_3des_set3keys (gl_3des_ctx *ctx, const char * key1,
 }
 
 void
-gl_3des_ecb_crypt (gl_3des_ctx *ctx,
-                   const char * _from,
-                   char * _to, int mode)
+gl_3des_ecb_crypt (gl_3des_ctx *restrict ctx,
+                   char const *restrict _from,
+                   char *restrict _to, int mode)
 {
   const unsigned char *from = (const unsigned char *) _from;
   unsigned char *to = (unsigned char *) _to;
@@ -650,7 +655,8 @@ gl_3des_ecb_crypt (gl_3des_ctx *ctx,
 }
 
 bool
-gl_3des_makekey (gl_3des_ctx *ctx, const char * key, size_t keylen)
+gl_3des_makekey (gl_3des_ctx *restrict ctx,
+                 char const *restrict  key, size_t keylen)
 {
   if (keylen != 24)
     return false;

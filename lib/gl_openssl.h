@@ -83,24 +83,28 @@ GL_CRYPTO_FN (_init_ctx) (struct _gl_ctx *ctx)
 /* These were never exposed by gnulib.  */
 #if ! (GL_OPENSSL_NAME == 224 || GL_OPENSSL_NAME == 384)
 GL_OPENSSL_INLINE void
-GL_CRYPTO_FN (_process_bytes) (const void *buf, size_t len, struct _gl_ctx *ctx)
+GL_CRYPTO_FN (_process_bytes) (void const *restrict buf, size_t len,
+                               struct _gl_ctx *restrict ctx)
 { OPENSSL_FN (_Update) ((_gl_CTX *) ctx, buf, len); }
 
 GL_OPENSSL_INLINE void
-GL_CRYPTO_FN (_process_block) (const void *buf, size_t len, struct _gl_ctx *ctx)
+GL_CRYPTO_FN (_process_block) (void const *restrict buf, size_t len,
+                               struct _gl_ctx *restrict ctx)
 { GL_CRYPTO_FN (_process_bytes) (buf, len, ctx); }
 #endif
 
 GL_OPENSSL_INLINE void *
-GL_CRYPTO_FN (_finish_ctx) (struct _gl_ctx *ctx, void *restrict res)
+GL_CRYPTO_FN (_finish_ctx) (struct _gl_ctx *restrict ctx, void *restrict res)
 { OPENSSL_FN (_Final) ((unsigned char *) res, (_gl_CTX *) ctx); return res; }
 
 GL_OPENSSL_INLINE void *
-GL_CRYPTO_FN (_buffer) (const char *buf, size_t len, void *restrict res)
+GL_CRYPTO_FN (_buffer) (char const *restrict buf, size_t len,
+                        void *restrict res)
 { return OPENSSL_FN () ((const unsigned char *) buf, len, (unsigned char *) res); }
 
 GL_OPENSSL_INLINE void *
-GL_CRYPTO_FN (_read_ctx) (const struct _gl_ctx *ctx, void *restrict res)
+GL_CRYPTO_FN (_read_ctx) (struct _gl_ctx const *restrict ctx,
+                          void *restrict res)
 {
   /* Assume any unprocessed bytes in ctx are not to be ignored.  */
   _gl_CTX tmp_ctx = *(_gl_CTX const *) ctx;

@@ -83,32 +83,34 @@ extern void sm3_init_ctx (struct sm3_ctx *ctx);
    initialization function update the context for the next LEN bytes
    starting at BUFFER.
    It is necessary that LEN is a multiple of 64!!! */
-extern void sm3_process_block (const void *buffer, size_t len,
-                               struct sm3_ctx *ctx);
+extern void sm3_process_block (void const *restrict buffer, size_t len,
+                               struct sm3_ctx *restrict ctx);
 
 /* Starting with the result of former calls of this function (or the
    initialization function update the context for the next LEN bytes
    starting at BUFFER.
    It is NOT required that LEN is a multiple of 64.  */
-extern void sm3_process_bytes (const void *buffer, size_t len,
-                               struct sm3_ctx *ctx);
+extern void sm3_process_bytes (void const *restrict buffer, size_t len,
+                               struct sm3_ctx *restrict ctx);
 
 /* Process the remaining bytes in the buffer and put result from CTX
    in first 32 bytes following RESBUF.  The result is always in little
    endian byte order, so that a byte-wise output yields to the wanted
    ASCII representation of the message digest.  */
-extern void *sm3_finish_ctx (struct sm3_ctx *ctx, void *restrict resbuf);
+extern void *sm3_finish_ctx (struct sm3_ctx *restrict ctx,
+                             void *restrict resbuf);
 
 /* Put result from CTX in first 32 bytes following RESBUF.  The result is
    always in little endian byte order, so that a byte-wise output yields
    to the wanted ASCII representation of the message digest.  */
-extern void *sm3_read_ctx (const struct sm3_ctx *ctx, void *restrict resbuf);
+extern void *sm3_read_ctx (struct sm3_ctx const *restrict ctx,
+                           void *restrict resbuf);
 
 /* Compute SM3 message digest for LEN bytes beginning at BUFFER.  The
    result is always in little endian byte order, so that a byte-wise
    output yields to the wanted ASCII representation of the message
    digest.  */
-extern void *sm3_buffer (const char *buffer, size_t len,
+extern void *sm3_buffer (char const *restrict buffer, size_t len,
                          void *restrict resblock);
 
 # endif
@@ -116,7 +118,7 @@ extern void *sm3_buffer (const char *buffer, size_t len,
 /* Compute SM3 message digest for bytes read from STREAM.  The
    resulting message digest number will be written into the 32 bytes
    beginning at RESBLOCK.  */
-extern int sm3_stream (FILE *stream, void *resblock);
+extern int sm3_stream (FILE *restrict stream, void *restrict resblock);
 
 
 # ifdef __cplusplus

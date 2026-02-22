@@ -43,7 +43,7 @@
    resulting message digest number will be written into the 32 bytes
    beginning at RESBLOCK.  */
 int
-sm3_stream (FILE *stream, void *resblock)
+sm3_stream (FILE *restrict stream, void *restrict resblock)
 {
   char *buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)

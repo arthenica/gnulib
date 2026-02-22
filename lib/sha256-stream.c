@@ -43,9 +43,11 @@
    The initial and finishing operations are INIT_CTX and FINISH_CTX.
    Return zero if and only if successful.  */
 static int
-shaxxx_stream (FILE *stream, char const *alg, void *resblock,
+shaxxx_stream (FILE *restrict stream, char const *restrict alg,
+               void *restrict resblock,
                ssize_t hashlen, void (*init_ctx) (struct sha256_ctx *),
-               void *(*finish_ctx) (struct sha256_ctx *, void *))
+               void *(*finish_ctx) (struct sha256_ctx *restrict,
+                                    void *restrict))
 {
   switch (afalg_stream (stream, alg, resblock, hashlen))
     {
@@ -120,14 +122,14 @@ shaxxx_stream (FILE *stream, char const *alg, void *resblock,
 }
 
 int
-sha256_stream (FILE *stream, void *resblock)
+sha256_stream (FILE *restrict stream, void *restrict resblock)
 {
   return shaxxx_stream (stream, "sha256", resblock, SHA256_DIGEST_SIZE,
                         sha256_init_ctx, sha256_finish_ctx);
 }
 
 int
-sha224_stream (FILE *stream, void *resblock)
+sha224_stream (FILE *restrict stream, void *restrict resblock)
 {
   return shaxxx_stream (stream, "sha224", resblock, SHA224_DIGEST_SIZE,
                         sha224_init_ctx, sha224_finish_ctx);

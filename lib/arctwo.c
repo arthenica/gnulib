@@ -74,8 +74,8 @@ to_uchar (char ch)
 }
 
 void
-arctwo_encrypt (arctwo_context *context, const char *inbuf,
-                char *outbuf, size_t length)
+arctwo_encrypt (arctwo_context *restrict context, char const *restrict inbuf,
+                char *restrict outbuf, size_t length)
 {
   for (; length >= ARCTWO_BLOCK_SIZE; length -= ARCTWO_BLOCK_SIZE,
          inbuf += ARCTWO_BLOCK_SIZE, outbuf += ARCTWO_BLOCK_SIZE)
@@ -128,8 +128,8 @@ arctwo_encrypt (arctwo_context *context, const char *inbuf,
 }
 
 void
-arctwo_decrypt (arctwo_context *context, const char *inbuf,
-                char *outbuf, size_t length)
+arctwo_decrypt (arctwo_context *restrict context, char const *restrict inbuf,
+                char *restrict outbuf, size_t length)
 {
   for (; length >= ARCTWO_BLOCK_SIZE; length -= ARCTWO_BLOCK_SIZE,
          inbuf += ARCTWO_BLOCK_SIZE, outbuf += ARCTWO_BLOCK_SIZE)
@@ -182,8 +182,9 @@ arctwo_decrypt (arctwo_context *context, const char *inbuf,
 }
 
 void
-arctwo_setkey_ekb (arctwo_context *context,
-                   size_t keylen, const char *key, size_t effective_keylen)
+arctwo_setkey_ekb (arctwo_context *restrict context,
+                   size_t keylen, char const *restrict key,
+                   size_t effective_keylen)
 {
   if (keylen < 40 / 8 || effective_keylen > 1024)
     return;

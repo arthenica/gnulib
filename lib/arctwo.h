@@ -41,8 +41,9 @@ typedef struct
    only be of EFFECTIVE_KEYLEN bits.  Normally, you use
    EFFECTIVE_KEYLEN of 0, but see RFC 2268 for more information. */
 void
-arctwo_setkey_ekb (arctwo_context *context,
-                   size_t keylen, const char *key, size_t effective_keylen);
+arctwo_setkey_ekb (arctwo_context *restrict context,
+                   size_t keylen, char const *restrict key,
+                   size_t effective_keylen);
 
 #define arctwo_setkey(context,keylen,key) \
   arctwo_setkey_ekb (context, keylen, key, 8 * (keylen))
@@ -52,7 +53,7 @@ arctwo_setkey_ekb (arctwo_context *context,
    and must have been initialized with arctwo_setkey or
    arctwo_setkey_ekb. */
 extern void
-arctwo_encrypt (arctwo_context *context, const char *inbuf,
+arctwo_encrypt (arctwo_context *restrict context, char const *restrict inbuf,
                 char *restrict outbuf, size_t length);
 
 /* Decrypt INBUF of size LENGTH into OUTBUF.  LENGTH must be a
@@ -60,7 +61,7 @@ arctwo_encrypt (arctwo_context *context, const char *inbuf,
    and must have been initialized with arctwo_setkey or
    arctwo_setkey_ekb. */
 extern void
-arctwo_decrypt (arctwo_context *context, const char *inbuf,
+arctwo_decrypt (arctwo_context *restrict context, char const *restrict inbuf,
                 char *restrict outbuf, size_t length);
 
 

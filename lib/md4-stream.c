@@ -39,7 +39,7 @@
    resulting message digest number will be written into the 16 bytes
    beginning at RESBLOCK.  */
 int
-md4_stream (FILE * stream, void *resblock)
+md4_stream (FILE *restrict stream, void *restrict resblock)
 {
   char *buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)

@@ -189,7 +189,8 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
 }
 
 Gc_rc
-gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
+gc_cipher_setkey (gc_cipher_handle restrict handle, size_t keylen,
+                  char const *restrict key)
 {
   gcry_error_t err = gcry_cipher_setkey ((gcry_cipher_hd_t) handle, key, keylen);
   if (gcry_err_code (err))
@@ -199,7 +200,8 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
 }
 
 Gc_rc
-gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
+gc_cipher_setiv (gc_cipher_handle restrict handle,
+                 size_t ivlen, char const *restrict iv)
 {
   gcry_error_t err = gcry_cipher_setiv ((gcry_cipher_hd_t) handle, iv, ivlen);
   if (gcry_err_code (err))
@@ -209,7 +211,8 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
 }
 
 Gc_rc
-gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
+gc_cipher_encrypt_inline (gc_cipher_handle restrict handle,
+                          size_t len, char *restrict data)
 {
   if (gcry_cipher_encrypt ((gcry_cipher_hd_t) handle,
                            data, len, NULL, len) != 0)
@@ -219,7 +222,8 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 }
 
 Gc_rc
-gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
+gc_cipher_decrypt_inline (gc_cipher_handle restrict handle,
+                          size_t len, char *restrict data)
 {
   if (gcry_cipher_decrypt ((gcry_cipher_hd_t) handle,
                            data, len, NULL, len) != 0)
@@ -357,7 +361,8 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 }
 
 Gc_rc
-gc_hash_clone (gc_hash_handle handle, gc_hash_handle * outhandle)
+gc_hash_clone (gc_hash_handle restrict handle,
+               gc_hash_handle *restrict outhandle)
 {
   _gc_hash_ctx *in = handle;
   _gc_hash_ctx *out = calloc (1, sizeof (*out));
@@ -433,7 +438,8 @@ gc_hash_digest_length (Gc_hash hash)
 }
 
 void
-gc_hash_hmac_setkey (gc_hash_handle handle, size_t len, const char *key)
+gc_hash_hmac_setkey (gc_hash_handle restrict handle,
+                     size_t len, char const *restrict key)
 {
   _gc_hash_ctx *ctx = handle;
 #if GNULIB_GC_MD2
@@ -446,7 +452,8 @@ gc_hash_hmac_setkey (gc_hash_handle handle, size_t len, const char *key)
 }
 
 void
-gc_hash_write (gc_hash_handle handle, size_t len, const char *data)
+gc_hash_write (gc_hash_handle restrict handle,
+               size_t len, char const *restrict data)
 {
   _gc_hash_ctx *ctx = handle;
 
@@ -510,7 +517,8 @@ gc_hash_close (gc_hash_handle handle)
 }
 
 Gc_rc
-gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
+gc_hash_buffer (Gc_hash hash, void const *restrict in, size_t inlen,
+                char *restrict resbuf)
 {
   int gcryalg;
 
@@ -594,7 +602,7 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
 #if GNULIB_GC_MD2
 Gc_rc
-gc_md2 (const void *in, size_t inlen, void *resbuf)
+gc_md2 (void const *restrict in, size_t inlen, void *restrict resbuf)
 {
   md2_buffer (in, inlen, resbuf);
   return GC_OK;
@@ -603,7 +611,7 @@ gc_md2 (const void *in, size_t inlen, void *resbuf)
 
 #if GNULIB_GC_MD4
 Gc_rc
-gc_md4 (const void *in, size_t inlen, void *resbuf)
+gc_md4 (void const *restrict in, size_t inlen, void *restrict resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_MD4);
   assert (outlen == GC_MD4_DIGEST_SIZE);
@@ -632,7 +640,7 @@ gc_md4 (const void *in, size_t inlen, void *resbuf)
 
 #if GNULIB_GC_MD5
 Gc_rc
-gc_md5 (const void *in, size_t inlen, void *resbuf)
+gc_md5 (void const *restrict in, size_t inlen, void *restrict resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_MD5);
   assert (outlen == GC_MD5_DIGEST_SIZE);
@@ -661,7 +669,7 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
 
 #if GNULIB_GC_SHA1
 Gc_rc
-gc_sha1 (const void *in, size_t inlen, void *resbuf)
+gc_sha1 (void const *restrict in, size_t inlen, void *restrict resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
   assert (outlen == GC_SHA1_DIGEST_SIZE);
@@ -690,7 +698,7 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 
 #if GNULIB_GC_SHA256
 Gc_rc
-gc_sha256 (const void *in, size_t inlen, void *resbuf)
+gc_sha256 (void const *restrict in, size_t inlen, void *restrict resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA256);
   assert (outlen == GC_SHA256_DIGEST_SIZE);
@@ -719,7 +727,7 @@ gc_sha256 (const void *in, size_t inlen, void *resbuf)
 
 #if GNULIB_GC_SHA512
 Gc_rc
-gc_sha512 (const void *in, size_t inlen, void *resbuf)
+gc_sha512 (void const *restrict in, size_t inlen, void *restrict resbuf)
 {
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
   assert (outlen == GC_SHA512_DIGEST_SIZE);
@@ -748,7 +756,7 @@ gc_sha512 (const void *in, size_t inlen, void *resbuf)
 
 #if GNULIB_GC_SM3
 Gc_rc
-gc_sm3  (const void *in, size_t inlen, void *resbuf)
+gc_sm3 (void const *restrict in, size_t inlen, void *restrict resbuf)
 {
 # if !LIBGCRYPT_HAS_MD_SM3
   sm3_buffer (in, inlen, resbuf);
@@ -782,8 +790,8 @@ gc_sm3  (const void *in, size_t inlen, void *resbuf)
 
 #if GNULIB_GC_HMAC_MD5
 Gc_rc
-gc_hmac_md5 (const void *key, size_t keylen,
-             const void *in, size_t inlen, char *resbuf)
+gc_hmac_md5 (void const *restrict key, size_t keylen,
+             void const *restrict in, size_t inlen, char *restrict resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_MD5);
   assert (hlen == GC_MD5_DIGEST_SIZE);
@@ -817,8 +825,8 @@ gc_hmac_md5 (const void *key, size_t keylen,
 
 #if GNULIB_GC_HMAC_SHA1
 Gc_rc
-gc_hmac_sha1 (const void *key, size_t keylen,
-              const void *in, size_t inlen, char *resbuf)
+gc_hmac_sha1 (void const *restrict key, size_t keylen,
+              void const *restrict in, size_t inlen, char *restrict resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
   assert (hlen == GC_SHA1_DIGEST_SIZE);
@@ -852,8 +860,8 @@ gc_hmac_sha1 (const void *key, size_t keylen,
 
 #if GNULIB_GC_HMAC_SHA256
 Gc_rc
-gc_hmac_sha256 (const void *key, size_t keylen,
-             const void *in, size_t inlen, char *resbuf)
+gc_hmac_sha256 (void const *restrict key, size_t keylen,
+                void const *restrict in, size_t inlen, char *restrict resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_SHA256);
   assert (hlen == GC_SHA256_DIGEST_SIZE);
@@ -887,8 +895,8 @@ gc_hmac_sha256 (const void *key, size_t keylen,
 
 #if GNULIB_GC_HMAC_SHA512
 Gc_rc
-gc_hmac_sha512 (const void *key, size_t keylen,
-              const void *in, size_t inlen, char *resbuf)
+gc_hmac_sha512 (void const *restrict key, size_t keylen,
+                void const *restrict in, size_t inlen, char *restrict resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
   assert (hlen == GC_SHA512_DIGEST_SIZE);

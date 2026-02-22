@@ -43,7 +43,7 @@
    resulting message digest number will be written into the 20 bytes
    beginning at RESBLOCK.  */
 int
-sha1_stream (FILE *stream, void *resblock)
+sha1_stream (FILE *restrict stream, void *restrict resblock)
 {
   switch (afalg_stream (stream, "sha1", resblock, SHA1_DIGEST_SIZE))
     {

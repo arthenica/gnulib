@@ -41,14 +41,16 @@ typedef struct
    LENGTH size.  CONTEXT must be initialized with arcfour_setkey
    before this function is called. */
 extern void
-arcfour_stream (arcfour_context * context,
-                const char *inbuf, char *restrict outbuf, size_t length);
+arcfour_stream (arcfour_context *restrict context,
+                char const *restrict inbuf, char *restrict outbuf,
+                size_t length);
 
 /* Initialize CONTEXT using encryption KEY of KEYLEN bytes.  KEY
    should be 40 bits (5 bytes) or longer.  The KEY cannot be zero
    length.  */
 extern void
-arcfour_setkey (arcfour_context * context, const char *key, size_t keylen);
+arcfour_setkey (arcfour_context *restrict context,
+                char const *restrict key, size_t keylen);
 
 
 #ifdef __cplusplus

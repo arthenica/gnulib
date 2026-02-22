@@ -58,14 +58,14 @@ extern "C" {
 #define RIJNDAEL_MAXKB (256/8)
 #define RIJNDAEL_MAXNR 14
 
-int rijndaelKeySetupEnc (uint32_t rk[ /*4*(Nr + 1) */ ],
-                         const char cipherKey[], size_t keyBits);
-int rijndaelKeySetupDec (uint32_t rk[ /*4*(Nr + 1) */ ],
-                         const char cipherKey[], size_t keyBits);
-void rijndaelEncrypt (const uint32_t rk[ /*4*(Nr + 1) */ ], size_t Nr,
-                      const char pt[16], char ct[16]);
-void rijndaelDecrypt (const uint32_t rk[ /*4*(Nr + 1) */ ], size_t Nr,
-                      const char ct[16], char pt[16]);
+int rijndaelKeySetupEnc (uint32_t rk[restrict /*4*(Nr + 1) */],
+                         char const cipherKey[restrict], size_t keyBits);
+int rijndaelKeySetupDec (uint32_t rk[restrict /*4*(Nr + 1) */],
+                         char const cipherKey[restrict], size_t keyBits);
+void rijndaelEncrypt (const uint32_t rk[restrict /*4*(Nr + 1) */], size_t Nr,
+                      char const pt[restrict 16], char ct[restrict 16]);
+void rijndaelDecrypt (const uint32_t rk[restrict /*4*(Nr + 1) */], size_t Nr,
+                      char const ct[restrict 16], char pt[restrict 16]);
 
 
 #ifdef __cplusplus

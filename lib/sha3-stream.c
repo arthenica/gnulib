@@ -141,28 +141,28 @@ sha3_xxx_stream (FILE *stream, char const *alg, void *resblock,
 }
 
 int
-sha3_224_stream (FILE *stream, void *resblock)
+sha3_224_stream (FILE *restrict stream, void *restrict resblock)
 {
   return sha3_xxx_stream (stream, "sha3-224", resblock, SHA3_224_DIGEST_SIZE,
                           sha3_224_init_ctx);
 }
 
 int
-sha3_256_stream (FILE *stream, void *resblock)
+sha3_256_stream (FILE *restrict stream, void *restrict resblock)
 {
   return sha3_xxx_stream (stream, "sha3-256", resblock, SHA3_256_DIGEST_SIZE,
                           sha3_256_init_ctx);
 }
 
 int
-sha3_384_stream (FILE *stream, void *resblock)
+sha3_384_stream (FILE *restrict stream, void *restrict resblock)
 {
   return sha3_xxx_stream (stream, "sha3-384", resblock, SHA3_384_DIGEST_SIZE,
                           sha3_384_init_ctx);
 }
 
 int
-sha3_512_stream (FILE *stream, void *resblock)
+sha3_512_stream (FILE *restrict stream, void *restrict resblock)
 {
   return sha3_xxx_stream (stream, "sha3-512", resblock, SHA3_512_DIGEST_SIZE,
                           sha3_512_init_ctx);

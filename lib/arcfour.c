@@ -29,7 +29,8 @@
 #include "arcfour.h"
 
 void
-arcfour_stream (arcfour_context * context, const char *inbuf, char *outbuf,
+arcfour_stream (arcfour_context *restrict context,
+                char const *restrict inbuf, char *restrict outbuf,
                 size_t length)
 {
   uint8_t i = context->idx_i;
@@ -54,7 +55,8 @@ arcfour_stream (arcfour_context * context, const char *inbuf, char *outbuf,
 }
 
 void
-arcfour_setkey (arcfour_context * context, const char *key, size_t keylen)
+arcfour_setkey (arcfour_context *restrict context,
+                char const *restrict key, size_t keylen)
 {
   char *sbox = context->sbox;
 

@@ -23,15 +23,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef Gc_rc (*gc_prf_func) (const void *key, size_t keylen,
-                              const void *in, size_t inlen, char *resbuf);
+typedef Gc_rc (*gc_prf_func) (void const *restrict key, size_t keylen,
+                              void const *restrict in, size_t inlen,
+                              char *restrict resbuf);
 
 static Gc_rc
 gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
-               const char *P, size_t Plen,
-               const char *S, size_t Slen,
+               char const *restrict P, size_t Plen,
+               char const *restrict S, size_t Slen,
                unsigned int c,
-               char *DK, size_t dkLen)
+               char *restrict DK, size_t dkLen)
 {
   if (c == 0)
     return GC_PKCS5_INVALID_ITERATION_COUNT;
@@ -93,9 +94,9 @@ gc_pbkdf2_prf (gc_prf_func prf, size_t hLen,
 
 Gc_rc
 gc_pbkdf2_hmac (Gc_hash hash,
-                const char *P, size_t Plen,
-                const char *S, size_t Slen,
-                unsigned int c, char *DK, size_t dkLen)
+                char const *restrict P, size_t Plen,
+                char const *restrict S, size_t Slen,
+                unsigned int c, char *restrict DK, size_t dkLen)
 {
   gc_prf_func prf;
   size_t hLen;

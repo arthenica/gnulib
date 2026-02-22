@@ -133,27 +133,28 @@ extern Gc_rc gc_random (char *data, size_t datalen);
 /* Ciphers. */
 extern Gc_rc gc_cipher_open (Gc_cipher cipher, Gc_cipher_mode mode,
                              gc_cipher_handle *outhandle);
-extern Gc_rc gc_cipher_setkey (gc_cipher_handle handle,
-                               size_t keylen, const char *key);
-extern Gc_rc gc_cipher_setiv (gc_cipher_handle handle,
-                              size_t ivlen, const char *iv);
-extern Gc_rc gc_cipher_encrypt_inline (gc_cipher_handle handle,
-                                       size_t len, char *data);
-extern Gc_rc gc_cipher_decrypt_inline (gc_cipher_handle handle,
-                                       size_t len, char *data);
+extern Gc_rc gc_cipher_setkey (gc_cipher_handle restrict handle,
+                               size_t keylen, char const *restrict key);
+extern Gc_rc gc_cipher_setiv (gc_cipher_handle restrict handle,
+                              size_t ivlen, char const *restrict iv);
+extern Gc_rc gc_cipher_encrypt_inline (gc_cipher_handle restrict handle,
+                                       size_t len, char *restrict data);
+extern Gc_rc gc_cipher_decrypt_inline (gc_cipher_handle restrict handle,
+                                       size_t len, char *restrict data);
 extern Gc_rc gc_cipher_close (gc_cipher_handle handle);
 
 /* Hashes. */
 
 extern Gc_rc gc_hash_open (Gc_hash hash, Gc_hash_mode mode,
                            gc_hash_handle *outhandle);
-extern Gc_rc gc_hash_clone (gc_hash_handle handle, gc_hash_handle *outhandle);
+extern Gc_rc gc_hash_clone (gc_hash_handle restrict handle,
+                            gc_hash_handle *restrict outhandle);
 extern size_t gc_hash_digest_length (Gc_hash hash)
                                      _GL_ATTRIBUTE_CONST;
-extern void gc_hash_hmac_setkey (gc_hash_handle handle,
-                                 size_t len, const char *key);
-extern void gc_hash_write (gc_hash_handle handle,
-                           size_t len, const char *data);
+extern void gc_hash_hmac_setkey (gc_hash_handle restrict handle,
+                                 size_t len, char const *restrict key);
+extern void gc_hash_write (gc_hash_handle restrict handle,
+                           size_t len, char const *restrict data);
 extern const char *gc_hash_read (gc_hash_handle handle);
 extern void gc_hash_close (gc_hash_handle handle);
 
@@ -164,24 +165,25 @@ extern void gc_hash_close (gc_hash_handle handle);
    must be 16 bytes.  The return value is 0 (GC_OK) on success, or
    another Gc_rc error code. */
 extern Gc_rc
-gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *out);
+gc_hash_buffer (Gc_hash hash, void const *restrict in, size_t inlen,
+                char *restrict out);
 
 /* One-call interface. */
-extern Gc_rc gc_md2 (const void *in, size_t inlen, void *resbuf);
-extern Gc_rc gc_md4 (const void *in, size_t inlen, void *resbuf);
-extern Gc_rc gc_md5 (const void *in, size_t inlen, void *resbuf);
-extern Gc_rc gc_sha1 (const void *in, size_t inlen, void *resbuf);
-extern Gc_rc gc_sha256 (const void *in, size_t inlen, void *resbuf);
-extern Gc_rc gc_sha512 (const void *in, size_t inlen, void *resbuf);
-extern Gc_rc gc_sm3 (const void *in, size_t inlen, void *resbuf);
-extern Gc_rc gc_hmac_md5 (const void *key, size_t keylen,
-                          const void *in, size_t inlen, char *resbuf);
-extern Gc_rc gc_hmac_sha1 (const void *key, size_t keylen,
-                           const void *in, size_t inlen, char *resbuf);
-extern Gc_rc gc_hmac_sha256 (const void *key, size_t keylen,
-                             const void *in, size_t inlen, char *resbuf);
-extern Gc_rc gc_hmac_sha512 (const void *key, size_t keylen,
-                             const void *in, size_t inlen, char *resbuf);
+extern Gc_rc gc_md2 (void const *restrict in, size_t inlen, void *restrict resbuf);
+extern Gc_rc gc_md4 (void const *restrict in, size_t inlen, void *restrict resbuf);
+extern Gc_rc gc_md5 (void const *restrict in, size_t inlen, void *restrict resbuf);
+extern Gc_rc gc_sha1 (void const *restrict in, size_t inlen, void *restrict resbuf);
+extern Gc_rc gc_sha256 (void const *restrict in, size_t inlen, void *restrict resbuf);
+extern Gc_rc gc_sha512 (void const *restrict in, size_t inlen, void *restrict resbuf);
+extern Gc_rc gc_sm3 (void const *restrict in, size_t inlen, void *restrict resbuf);
+extern Gc_rc gc_hmac_md5 (void const *restrict key, size_t keylen,
+                          void const *restrict in, size_t inlen, char *restrict resbuf);
+extern Gc_rc gc_hmac_sha1 (void const *restrict key, size_t keylen,
+                           void const *restrict in, size_t inlen, char *restrict resbuf);
+extern Gc_rc gc_hmac_sha256 (void const *restrict key, size_t keylen,
+                             void const *restrict in, size_t inlen, char *restrict resbuf);
+extern Gc_rc gc_hmac_sha512 (void const *restrict key, size_t keylen,
+                             void const *restrict in, size_t inlen, char *restrict resbuf);
 
 /* Derive cryptographic keys using PKCS#5 PBKDF2 (RFC 2898) from a
    password P of length PLEN, with salt S of length SLEN, placing the
@@ -193,13 +195,13 @@ extern Gc_rc gc_hmac_sha512 (const void *key, size_t keylen,
    returned on success, otherwise a Gc_rc error code is returned.  */
 extern Gc_rc
 gc_pbkdf2_hmac (Gc_hash hash,
-                const char *P, size_t Plen,
-                const char *S, size_t Slen,
+                char const *restrict P, size_t Plen,
+                char const *restrict S, size_t Slen,
                 unsigned int c, char *restrict DK, size_t dkLen);
 
 extern Gc_rc
-gc_pbkdf2_sha1 (const char *P, size_t Plen,
-                const char *S, size_t Slen,
+gc_pbkdf2_sha1 (char const *restrict P, size_t Plen,
+                char const *restrict S, size_t Slen,
                 unsigned int c, char *restrict DK, size_t dkLen);
 
 /*

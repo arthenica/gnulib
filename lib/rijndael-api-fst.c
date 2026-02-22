@@ -70,8 +70,9 @@
 #include <string.h>
 
 rijndael_rc
-rijndaelMakeKey (rijndaelKeyInstance *key, rijndael_direction direction,
-                 size_t keyLen, const char *keyMaterial)
+rijndaelMakeKey (rijndaelKeyInstance *restrict key,
+                 rijndael_direction direction,
+                 size_t keyLen, char const *restrict keyMaterial)
 {
   if (key == NULL)
     {
@@ -148,8 +149,8 @@ rijndaelMakeKey (rijndaelKeyInstance *key, rijndael_direction direction,
 }
 
 rijndael_rc
-rijndaelCipherInit (rijndaelCipherInstance *cipher, rijndael_mode mode,
-                    const char *IV)
+rijndaelCipherInit (rijndaelCipherInstance *restrict cipher, rijndael_mode mode,
+                    char const *restrict IV)
 {
   if ((mode == RIJNDAEL_MODE_ECB) || (mode == RIJNDAEL_MODE_CBC)
       || (mode == RIJNDAEL_MODE_CFB1))
@@ -201,10 +202,10 @@ rijndaelCipherInit (rijndaelCipherInstance *cipher, rijndael_mode mode,
 }
 
 int
-rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
-                      const rijndaelKeyInstance *key,
-                      const char *input,
-                      size_t inputLen, char *outBuffer)
+rijndaelBlockEncrypt (rijndaelCipherInstance *restrict cipher,
+                      rijndaelKeyInstance const *restrict key,
+                      char const *restrict input,
+                      size_t inputLen, char *restrict outBuffer)
 {
   if (cipher == NULL || key == NULL || key->direction == RIJNDAEL_DIR_DECRYPT)
     {
@@ -279,10 +280,10 @@ rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
 }
 
 int
-rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
-                    const rijndaelKeyInstance *key,
-                    const char *input,
-                    size_t inputOctets, char *outBuffer)
+rijndaelPadEncrypt (rijndaelCipherInstance *restrict cipher,
+                    rijndaelKeyInstance const *restrict key,
+                    char const *restrict input,
+                    size_t inputOctets, char *restrict outBuffer)
 {
   if (cipher == NULL || key == NULL || key->direction == RIJNDAEL_DIR_DECRYPT)
     {
@@ -353,10 +354,10 @@ rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
 }
 
 int
-rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
-                      const rijndaelKeyInstance *key,
-                      const char *input,
-                      size_t inputLen, char *outBuffer)
+rijndaelBlockDecrypt (rijndaelCipherInstance *restrict cipher,
+                      rijndaelKeyInstance const *restrict key,
+                      char const *restrict input,
+                      size_t inputLen, char *restrict outBuffer)
 {
   if (cipher == NULL
       || key == NULL
@@ -432,10 +433,10 @@ rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
 }
 
 int
-rijndaelPadDecrypt (rijndaelCipherInstance *cipher,
-                    const rijndaelKeyInstance *key,
-                    const char *input,
-                    size_t inputOctets, char *outBuffer)
+rijndaelPadDecrypt (rijndaelCipherInstance *restrict cipher,
+                    rijndaelKeyInstance const *restrict key,
+                    char const *restrict input,
+                    size_t inputOctets, char *restrict outBuffer)
 {
   if (cipher == NULL || key == NULL || key->direction == RIJNDAEL_DIR_ENCRYPT)
     {
