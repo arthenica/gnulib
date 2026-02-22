@@ -155,15 +155,14 @@ sha3_process_bytes (const void *buffer, size_t len, struct sha3_ctx *ctx)
       len -= left;
       sha3_process_block (ctx->buffer, ctx->blocklen, ctx);
     }
+
   /* Process as many complete blocks as possible.  */
-  if (0 < len)
-    {
-      size_t full_blocks = (len / ctx->blocklen) * ctx->blocklen;
-      sha3_process_block (buf, full_blocks, ctx);
-      buf += full_blocks;
-      len -= full_blocks;
-      memcpy (ctx->buffer, buf, len);
-    }
+  size_t full_len = len - len % ctx->blocklen;
+  sha3_process_block (buf, full_len, ctx);
+  buf += full_len;
+  len -= full_len;
+
+  memcpy (ctx->buffer, buf, len);
   ctx->buflen = len;
   return true;
 }
