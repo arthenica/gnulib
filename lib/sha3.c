@@ -338,7 +338,7 @@ sha3_process_block (const void *buffer, size_t len, struct sha3_ctx *ctx)
   sha3_##SIZE##_init_ctx (struct sha3_ctx *ctx)                         \
   {                                                                     \
     int result;                                                         \
-    ctx->evp_ctx = EVP_MD_CTX_create ();                                \
+    ctx->evp_ctx = EVP_MD_CTX_new ();                                   \
     if (ctx->evp_ctx == NULL)                                           \
       {                                                                 \
         errno = ENOMEM;                                                 \
