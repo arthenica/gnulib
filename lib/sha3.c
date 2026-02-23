@@ -402,7 +402,8 @@ sha3_finish_ctx (struct sha3_ctx *restrict ctx, void *restrict resbuf)
 
 #define DEFINE_SHA3_BUFFER(SIZE)                                        \
   void *                                                                \
-  sha3_##SIZE##_buffer (const char *buffer, size_t len, void *resblock) \
+  sha3_##SIZE##_buffer (char const *restrict buffer, size_t len,        \
+                        void *restrict resblock)                        \
   {                                                                     \
     struct sha3_ctx ctx;                                                \
     void *result = ((sha3_##SIZE##_init_ctx (&ctx)                      \

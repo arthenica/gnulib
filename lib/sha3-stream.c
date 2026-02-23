@@ -40,7 +40,8 @@
    The initial operation is INIT_CTX.  Return zero if and only if
    successful.  */
 static int
-sha3_xxx_stream (FILE *stream, char const *alg, void *resblock,
+sha3_xxx_stream (FILE *restrict stream, char const *restrict alg,
+                 void *restrict resblock,
                  ssize_t hashlen, bool (*init_ctx) (struct sha3_ctx *))
 {
   switch (afalg_stream (stream, alg, resblock, hashlen))
