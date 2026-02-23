@@ -33,5 +33,13 @@ main ()
   ASSERT (ro_nul - ro == 3);
   ASSERT (rw_nul - rw == 3);
 
+#if !defined __cplusplus
+  const char *rov_nul = strnul ((const void *) ro);
+  char *rwv_nul = strnul ((void *) rw);
+
+  ASSERT (rov_nul - ro == 3);
+  ASSERT (rwv_nul - rw == 3);
+#endif
+
   return test_exit_status;
 }

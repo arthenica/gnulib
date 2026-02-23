@@ -1271,10 +1271,16 @@ template <> inline       char *strnul<      char *> (      char *s)
       || (defined __SUNPRO_C && __SUNPRO_C >= 0x5150) \
       || (__STDC_VERSION__ >= 201112L && !defined __GNUC__)
 /* The compiler supports _Generic from ISO C11.  */
+/* Since in C (but not in C++!), any function that accepts a '[const] char *'
+   also accepts a '[const] void *' as argument, we make sure that the function-
+   like macro does the same, by mapping its type first:
+     char *, void *             -> void *
+     const char *, const void * -> const void *
+   This mapping is done through the conditional expression.  */
 #   define strnul(s) \
-      _Generic (s, \
-                char *       : (char *) gl_strnul (s), \
-                const char * : gl_strnul (s))
+      _Generic (1 ? (s) : (void *) 99, \
+                void *       : (char *) gl_strnul (s), \
+                const void * : gl_strnul (s))
 #  else
 #   define strnul(s) \
       ((char *) gl_strnul (s))
