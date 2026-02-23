@@ -55,7 +55,7 @@ shaxxx_stream (FILE *restrict stream, char const *restrict alg,
     case -EIO: return 1;
     }
 
-  char *buffer = malloc (BLOCKSIZE + 72);
+  char *buffer = malloc (BLOCKSIZE);
   if (!buffer)
     return 1;
 

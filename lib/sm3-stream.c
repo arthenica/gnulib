@@ -45,7 +45,7 @@
 int
 sm3_stream (FILE *restrict stream, void *restrict resblock)
 {
-  char *buffer = malloc (BLOCKSIZE + 72);
+  char *buffer = malloc (BLOCKSIZE);
   if (!buffer)
     return 1;
 
