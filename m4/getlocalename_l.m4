@@ -42,7 +42,7 @@ AC_DEFUN_ONCE([gl_FUNC_GETLOCALENAME_L_UNSAFE],
 int main ()
 {
   int result = 0;
-  /* Check againt the Cygwin bug.  */
+  /* Check against the Cygwin bug.  */
   {
     const char *ret = getlocalename_l (LC_COLLATE, LC_GLOBAL_LOCALE);
     if (strlen (ret) == 0)
