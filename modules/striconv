@@ -10,6 +10,7 @@ iconv
 iconv_open
 free-posix
 strdup
+strnul
 c-strcasecmp
 
 configure.ac:

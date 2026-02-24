@@ -14,6 +14,7 @@ realloc-posix   [test -n "$ARGZ_H"]
 stpcpy          [test -n "$ARGZ_H"]
 strndup         [test -n "$ARGZ_H"]
 strnlen         [test -n "$ARGZ_H"]
+strnul          [test -n "$ARGZ_H"]
 strstr          [test -n "$ARGZ_H"]
 
 configure.ac:

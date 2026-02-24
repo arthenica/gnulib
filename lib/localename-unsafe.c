@@ -2558,7 +2558,7 @@ enum_locales_fn (LPSTR locale_num_str)
     {
       strcat (locval, "_");
       if (GetLocaleInfo (try_lcid, LOCALE_SENGCOUNTRY,
-                        locval + strlen (locval), LOCALE_NAME_MAX_LENGTH))
+                        strnul (locval), LOCALE_NAME_MAX_LENGTH))
        {
          size_t locval_len = strlen (locval);
 

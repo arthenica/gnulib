@@ -19,6 +19,7 @@ free-posix
 limits-h
 stdint-h
 stringeq
+strnul
 malloc-posix
 ssize_t
 stat

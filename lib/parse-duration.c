@@ -192,7 +192,7 @@ parse_year_month_day (cch_t * pz, cch_t * ps)
   res = parse_scaled_value (res, &pz, ps, SEC_PER_MONTH);
 
   pz++; /* over the second '-' */
-  ps = pz + strlen (pz);
+  ps = strnul (pz);
   return parse_scaled_value (res, &pz, ps, SEC_PER_DAY);
 }
 
@@ -292,7 +292,7 @@ parse_hour_minute_second (cch_t * pz, cch_t * ps)
   res = parse_scaled_value (res, &pz, ps, SEC_PER_MIN);
 
   pz++;
-  ps = pz + strlen (pz);
+  ps = strnul (pz);
   return parse_scaled_value (res, &pz, ps, 1);
 }
 
@@ -408,7 +408,7 @@ trim (char * pz)
 
   /* trim trailing white space */
   {
-    char * pe = pz + strlen (pz);
+    char * pe = strnul (pz);
     while ((pe > pz) && isspace ((unsigned char)pe[-1]))
       pe--;
     *pe = NUL;

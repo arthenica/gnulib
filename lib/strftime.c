@@ -1358,7 +1358,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             mbstate_t mbstate = mbstate_zero;
 
             if (! format_end)
-              format_end = f + strlen (f) + 1;
+              format_end = strnul (f) + 1;
             size_t fsize = format_end - f;
 
             size_t len = 0;

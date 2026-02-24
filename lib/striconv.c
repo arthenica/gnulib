@@ -258,7 +258,7 @@ str_cd_iconv (const char *src, iconv_t cd)
 
     for (;;)
       {
-        /* Here inptr + inbytes_remaining = src + strlen (src),
+        /* Here inptr + inbytes_remaining = strnul (src),
                 outptr + outbytes_remaining = result + result_size - 1.  */
         size_t res = iconv (cd,
                             (ICONV_CONST char **) &inptr, &inbytes_remaining,

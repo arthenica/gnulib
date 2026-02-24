@@ -10,6 +10,7 @@ Depends-on:
 stdio-h
 sys_types-h
 nstrftime
+strnul
 time_rz
 
 configure.ac:

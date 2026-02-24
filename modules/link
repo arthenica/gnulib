@@ -10,6 +10,7 @@ unistd-h
 free-posix      [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 stat            [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 strdup-posix    [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
+strnul          [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 sys_stat-h      [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 
 configure.ac:

@@ -175,7 +175,7 @@ argz_next (const char *argz, size_t argz_len, const char *entry)
   if (entry)
     {
       if (entry < argz + argz_len)
-        entry = strchr (entry, '\0') + 1;
+        entry = strnul (entry) + 1;
 
       return entry >= argz + argz_len ? NULL : (char *) entry;
     }

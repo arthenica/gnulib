@@ -26,6 +26,7 @@ localename-unsafe [case "$host_os" in darwin*) false ;; *) true ;; esac]
 bool
 stdckdint-h
 stdint-h
+strnul
 time_rz
 
 configure.ac:

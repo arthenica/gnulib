@@ -19,6 +19,7 @@ locale-h
 strdup
 stringeq
 strncpy
+strnul
 windows-mutex
 getlocalename_l-unsafe
 setlocale-null-unlocked

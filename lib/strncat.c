@@ -23,7 +23,7 @@
 char *
 strncat (char *dest, const char *src, size_t n)
 {
-  char *destptr = dest + strlen (dest);
+  char *destptr = strnul (dest);
 
   for (; n > 0 && (*destptr = *src) != '\0'; src++, destptr++, n--)
     ;

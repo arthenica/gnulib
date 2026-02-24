@@ -767,7 +767,7 @@ setlocale_unixlike (int category, const char *locale)
             const char *territory_start = underscore + 1;
             const char *territory_end = strchr (territory_start, '@');
             if (territory_end == NULL)
-              territory_end = territory_start + strlen (territory_start);
+              territory_end = strnul (territory_start);
 
             char ll_buf[64];
             memcpy (ll_buf, llCC_buf, underscore - llCC_buf);

@@ -10,6 +10,7 @@ time-h
 bool
 spawn-pipe
 stringeq
+strnul
 wait-process
 execute
 safe-read

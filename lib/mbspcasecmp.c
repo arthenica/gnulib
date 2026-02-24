@@ -45,7 +45,7 @@ mbspcasecmp (const char *string, const char *prefix)
        mbsncasecmp (string, prefix, mbslen (prefix))
      just with small optimizations.  */
   if (string == prefix)
-    return (char *) (string + strlen (string));
+    return (char *) strnul (string);
 
   const char *iter1 = string;
   const char *iter2 = prefix;

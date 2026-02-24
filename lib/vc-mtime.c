@@ -250,7 +250,7 @@ git_mtime (struct timespec *mtime, const char *filename)
           char *endptr;
           unsigned long git_log_time;
           if (xstrtoul (line, &endptr, 10, &git_log_time, NULL) == LONGINT_OK
-              && endptr == line + strlen (line))
+              && endptr == strnul (line))
             {
               mtime->tv_sec = git_log_time;
               mtime->tv_nsec = 0;
@@ -885,7 +885,7 @@ max_vc_mtime (struct timespec *max_of_mtimes,
                             char *endptr;
                             unsigned long git_log_time;
                             if (!(xstrtoul (line, &endptr, 10, &git_log_time, NULL) == LONGINT_OK
-                                  && endptr == line + strlen (line)))
+                                  && endptr == strnul (line)))
                               {
                                 fprintf (stderr, "vc-mtime: git log output not as expected\n");
                                 goto git_log_fail1;

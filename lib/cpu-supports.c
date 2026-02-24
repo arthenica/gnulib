@@ -66,7 +66,7 @@ hwcap_allowed (char const *glibc_hwcap)
 
   char const *sentinel = strchr (hwcaps, ':');
   if (! sentinel)
-    sentinel = hwcaps + strlen (hwcaps);
+    sentinel = strnul (hwcaps);
   char const *cap = hwcaps;
   while ((cap = strstr (cap, glibc_hwcap)) && cap < sentinel)
     { /* Check it's not a partial match.  */

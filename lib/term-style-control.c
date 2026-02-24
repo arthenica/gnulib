@@ -215,7 +215,7 @@ log_signal_handler_called (int sig)
 {
   char message[100];
   strcpy (message, "Signal handler for signal ");
-  simple_signal_string (message + strlen (message), sig);
+  simple_signal_string (strnul (message), sig);
   strcat (message, " called.\n");
   log_message (message);
 }
@@ -434,9 +434,9 @@ tcsetattr_failed (char message[100], const char *caller)
   int errnum = errno;
   strcpy (message, caller);
   strcat (message, ": tcsetattr(fd=");
-  sprintf_integer (message + strlen (message), active_fd);
+  sprintf_integer (strnul (message), active_fd);
   strcat (message, ") failed, errno=");
-  simple_errno_string (message + strlen (message), errnum);
+  simple_errno_string (strnul (message), errnum);
   strcat (message, "\n");
 }
 

@@ -19,6 +19,7 @@ libc-config
 locale-h
 bool
 stdckdint-h
+strnul
 time_rz
 
 configure.ac:

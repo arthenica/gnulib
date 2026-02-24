@@ -10,6 +10,7 @@ attribute
 bool
 c99
 stringeq
+strnul
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])

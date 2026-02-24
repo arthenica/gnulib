@@ -113,7 +113,7 @@ link (const char *file1, const char *file2)
     return -1;
   {
     struct stat st;
-    char *p = strchr (dir, '\0');
+    char *p = strnul (dir);
     while (dir < p && (*--p != '/' && *p != '\\'));
     *p = '\0';
     if (p != dir && stat (dir, &st) != 0 && errno != EOVERFLOW)

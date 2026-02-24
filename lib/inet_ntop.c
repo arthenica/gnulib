@@ -225,7 +225,7 @@ inet_ntop6 (const unsigned char *src, char *dst, socklen_t size)
         {
           if (!inet_ntop4 (src + 12, tp, sizeof tmp - (tp - tmp)))
             return (NULL);
-          tp += strlen (tp);
+          tp = strnul (tp);
           break;
         }
       {
